@@ -1,8 +1,6 @@
 import streamlit as st
 
 import requests
-import librosa
-import json
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -59,7 +57,7 @@ def page_4():
                                   for element in proba_str.split(', ')))
 
             image = response.content
-            st.write(prediction)
+            #st.write(prediction)
 
             st.write(prediction.get('Probability of bark'))
             #pred = prediction['label']
