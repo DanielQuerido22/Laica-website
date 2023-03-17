@@ -6,9 +6,8 @@ import matplotlib.pyplot as plt
 
 st.sidebar.image(
     "laica_logo_v1.png",
-    width=250,
+    width=300,
 )
-
 
 text_style = """
     font-size: 18px;
@@ -82,7 +81,7 @@ from machine learning library Scikit-learn.
     st.markdown(f"<p style='{title_style}'>{title_2}</p>", unsafe_allow_html=True)
     st.write(f"<p style='{subtitle_style}'>{subtitle_2}</p>", unsafe_allow_html=True)
     st.write(f"<p style='{text_style}'>{text_2}</p>", unsafe_allow_html=True)
-    # st.image("image_5.jpg")
+    st.image("image_6.jpeg")
 
 def page_3():
     title_3 = "SPECTOGRAMS"
@@ -152,8 +151,30 @@ def page_4():
 
 def page_5():
     title_5 = "TEAM"
+    text_daniel = "Daniel Querido"
+    text_laszlo = "Laszlo Zssiros"
+    text_mariana = "Mariana Sanin"
     st.markdown(f"<p style='{title_style}'>{title_5}</p>", unsafe_allow_html=True)
-    # st.sidebar.markdown("# Page 5")
+
+    col6, col7, col8 = st.columns(3)
+    # Display the images in the columns
+    with col6:
+        st.image('me.png')
+        st.write(f"<p style='{text_style}'>{text_daniel}</p>", text_align='center', unsafe_allow_html=True)
+    with col7:
+        st.image('laszlo.png')
+        st.write(f"<p style='{text_style}'>{text_laszlo}</p>", text_align='center', unsafe_allow_html=True)
+    with col8:
+        st.image('mariana.png')
+        st.write(f"<p style='{text_style}'>{text_mariana}</p>", text_align='center', unsafe_allow_html=True)
+
+    col6.text_align = 'center'
+    col7.text_align = 'center'
+    col8.text_align = 'center'
+
+
+
+
 
 page_names_to_funcs = {
     "Laica": main_page,
