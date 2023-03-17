@@ -4,11 +4,49 @@ import requests
 import pandas as pd
 import matplotlib.pyplot as plt
 
+text_style = """
+    font-size: 18px;
+    color: gray;
+    text-align: justify;
+    font-family: 'Roboto'
+"""
+
+title_style = """
+    font-size: 30px;
+    color: black;
+    font-weight:normal;
+    font-family: 'Roboto'
+"""
+
+subtitle_style = """
+    font-size: 20px;
+    color: black;
+    font-family: 'Roboto'
+"""
+
+subtitle_style_2 = """
+    font-size: 20px;
+    color: gray;
+    font-family: 'Roboto'
+"""
+
 def main_page():
-    st.markdown("# LAICA")
+
+    title_1 = "LAICA"
+    subtitle_1 = "Learning-based Artificial Intelligence on Canine Acoustics"
+    # subtitle_2 = "What is LAICA"
+    text = """LAICA is a collection of machine learning models that can classify four different
+types of dog vocalizations: barks, growls, whines and pants. We developed LAICA as
+a demo project during our Data Science training at Le Wagon Portugal. But we hope
+that this can serve as a pilot project for researchers who need to rapidly and
+reliably classify various dog sounds."""
+
+    st.markdown(f"<p style='{title_style}'>{title_1}</p>", unsafe_allow_html=True)
+    st.write(f"<p style='{subtitle_style}'>{subtitle_1}</p>", unsafe_allow_html=True)
+    # st.write(f"<p style='{subtitle_style_2}'>{subtitle_2}</p>", unsafe_allow_html=True)
     # st.sidebar.markdown("# LAICA")
-    st.subheader("Dog Sound Classifier")
-    st.text("Text provided by Lazlo")
+    # st.header("Dog Sound Classifier")
+    st.write(f"<p style='{text_style}'>{text}</p>", unsafe_allow_html=True)
     # st.text("Upload a audio file and find what kind of sound the dog is making either from:")
     # st.text("1. Spectograms")
     # st.text("2. Sound Features")
@@ -42,9 +80,8 @@ def page_4():
 
     # st.set_option('deprecation.showfileUploaderEncoding', False)
     uploaded_file = st.file_uploader("Choose a wav file")
-    def predict_from_spectograms():
 
-        if uploaded_file is not None:
+    def predict_from_spectograms():
 
             dog_sound_api_url = 'https://laica-bmz4557psa-ew.a.run.app/predict_from_spectograms/'
             files = {'audio': uploaded_file}
@@ -64,31 +101,38 @@ def page_4():
 
             #prediction = response.json()
 
-            st.header(f'We have just heard a:')
-
-
             df = pd.DataFrame(prediction.items()).set_index(0)
             df.plot(kind='bar')
             fig = plt.gcf()
             st.pyplot(fig)
 
+            max_key = max(prediction, key=lambda k: prediction[k])
+            max_value = prediction[max_key]
+
+            st.header(max_key)
+            st.header(f'the {max_key} is {max_value*100:.2f}%')
+
             st.image(image, use_column_width=True)
 
     def predict_from_features():
-
-        if uploaded_file is not None:
 
             dog_sound_api_url = 'https://laica-bmz4557psa-ew.a.run.app/predict_from_features/'
             files = {'audio': uploaded_file}
             response = requests.post(dog_sound_api_url, files=files)
             st.write(response.status_code)
             prediction = response.json()
+            max_key = max(prediction, key=lambda k: prediction[k])
+            max_value = prediction[max_key]
 
-            st.header(f'We have just heard a {prediction}')
+            st.header(f'We are {max_value*100:.2f}% sure that we have just heard a {max_key.upper()}')
 
-
-    st.button('Predict_from_spectograms', on_click=predict_from_spectograms)
-    st.button('Predict_from_features', on_click=predict_from_features)
+    if uploaded_file is not None:
+        col4, col5 = st.columns(2)
+        # Display the images in the columns
+        with col4:
+            st.button('Predict_from_spectograms', on_click=predict_from_spectograms)
+        with col5:
+            st.button('Predict_from_features', on_click=predict_from_features)
 
 def page_5():
     st.markdown("# TEAM")
