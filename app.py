@@ -34,23 +34,22 @@ def main_page():
 
     title_1 = "LAICA"
     subtitle_1 = "Learning-based Artificial Intelligence on Canine Acoustics"
-    # subtitle_2 = "What is LAICA"
-    text = """LAICA is a collection of machine learning models that can classify four different
+    text_1 = """LAICA is a collection of machine learning models that can classify four different
 types of dog vocalizations: barks, growls, whines and pants. We developed LAICA as
 a demo project during our Data Science training at Le Wagon Portugal. But we hope
 that this can serve as a pilot project for researchers who need to rapidly and
 reliably classify various dog sounds."""
+    text_2 = """We received tens of gigabytes of raw audio files with corresponding labeling from
+the Ethology Departement of ELTE University (Budapest). These were long recordings
+of various experiments, containing different sounds. However, researchers have already
+manually labeled dog vocalizations using Praat. Based on their work we managed to
+splice out roughly 20,000 sound snippets. After pre-selection, cleaning,
+pre-processing and augmentation, these served as the training sets of the model."""
 
     st.markdown(f"<p style='{title_style}'>{title_1}</p>", unsafe_allow_html=True)
     st.write(f"<p style='{subtitle_style}'>{subtitle_1}</p>", unsafe_allow_html=True)
-    # st.write(f"<p style='{subtitle_style_2}'>{subtitle_2}</p>", unsafe_allow_html=True)
-    # st.sidebar.markdown("# LAICA")
-    # st.header("Dog Sound Classifier")
-    st.write(f"<p style='{text_style}'>{text}</p>", unsafe_allow_html=True)
-    # st.text("Upload a audio file and find what kind of sound the dog is making either from:")
-    # st.text("1. Spectograms")
-    # st.text("2. Sound Features")
-    # Create three columns for the images
+    st.write(f"<p style='{text_style}'>{text_1}</p>", unsafe_allow_html=True)
+
     col1, col2, col3 = st.columns(3)
 
     # Display the images in the columns
@@ -62,24 +61,44 @@ reliably classify various dog sounds."""
         st.image('image_3.jpg')
         # st.image("image_1.jpg", use_column_width=True, width=50)
 
+    st.write(f"<p style='{text_style}'>{text_2}</p>", unsafe_allow_html=True)
+    st.audio("bark_00005.wav", format='audio/wav')
+
 def page_2():
-    st.markdown("# FEATURES")
-    st.subheader("Model Trainning using Sound Features")
-    st.text("Text")
-    # st.sidebar.markdown("# Page 2")
+    title_2 = "FEATURES"
+    subtitle_2 = "Model Trainning using Audio Features"
+    text_2 = """This model was trained using the some of the sound features extracted from the
+audio files. These features were extracted using the Librosa library. From these
+features we therefore created a dataset that we trained, using the XGBoost model
+from machine learning library Scikit-learn.
+"""
+
+    st.markdown(f"<p style='{title_style}'>{title_2}</p>", unsafe_allow_html=True)
+    st.write(f"<p style='{subtitle_style}'>{subtitle_2}</p>", unsafe_allow_html=True)
+    st.write(f"<p style='{text_style}'>{text_2}</p>", unsafe_allow_html=True)
+    # st.image("image_5.jpg")
 
 def page_3():
-    st.markdown("# SPECTOGRAMS")
-    st.subheader("Model Trainning using Sound Spectograms")
-    st.text("Text")
-    # st.sidebar.markdown("# Page 3")
+    title_3 = "SPECTOGRAMS"
+    subtitle_3 = "Model Trainning using sound Spectograms"
+    text_3 = """In this approach we used the sound spectograms as features. First we extracted
+the spectogram information from the audio files using the Librosa library. Then
+ploted the spectograms using the library matplotlib and saved them as png images.
+We then used these images as to train the model using a neural network from deep
+learning library Keras.
+"""
+
+    st.markdown(f"<p style='{title_style}'>{title_3}</p>", unsafe_allow_html=True)
+    st.write(f"<p style='{subtitle_style}'>{subtitle_3}</p>", unsafe_allow_html=True)
+    st.write(f"<p style='{text_style}'>{text_3}</p>", unsafe_allow_html=True)
+    st.image("image_5.png")
 
 def page_4():
-    st.markdown("# MODEL")
-    # st.sidebar.markdown("# Page 4")
 
-    # st.set_option('deprecation.showfileUploaderEncoding', False)
+    title_4 = "MODEL"
+    st.markdown(f"<p style='{title_style}'>{title_4}</p>", unsafe_allow_html=True)
     uploaded_file = st.file_uploader("Choose a wav file")
+
 
     def predict_from_spectograms():
 
@@ -87,32 +106,21 @@ def page_4():
             files = {'audio': uploaded_file}
             response = requests.post(dog_sound_api_url, files=files)
 
-            #prediction = json.loads(response.headers.get('X-proba').replace("'", '"'))
             proba_str = response.headers.get('X-proba')
             prediction = dict((a.strip().replace('{','').replace('"','').replace("'",""), float(b.strip().replace('}','').replace('"','').replace("'","")))
                      for a, b in (element.split(':')
                                   for element in proba_str.split(', ')))
 
             image = response.content
-            #st.write(prediction)
-
-            st.write(prediction.get('Probability of bark'))
-            #pred = prediction['label']
-
-            #prediction = response.json()
-
-            df = pd.DataFrame(prediction.items()).set_index(0)
-            df.plot(kind='bar')
-            fig = plt.gcf()
-            st.pyplot(fig)
 
             max_key = max(prediction, key=lambda k: prediction[k])
             max_value = prediction[max_key]
 
-            st.header(max_key)
-            st.header(f'the {max_key} is {max_value*100:.2f}%')
-
+            text_6 = 'This is the spectogram of the audio file:'
+            st.write(f"<p style='{subtitle_style}'>{text_6}</p>", unsafe_allow_html=True)
             st.image(image, use_column_width=True)
+            result_1 = (f'The {max_key} is {max_value*100:.2f}%')
+            st.markdown(f"<p style='{title_style}'>{result_1}</p>", unsafe_allow_html=True)
 
     def predict_from_features():
 
@@ -123,18 +131,21 @@ def page_4():
             prediction = response.json()
             max_key = max(prediction, key=lambda k: prediction[k])
             max_value = prediction[max_key]
-
             st.header(f'We are {max_value*100:.2f}% sure that we have just heard a {max_key.upper()}')
 
     if uploaded_file is not None:
+        st.audio(uploaded_file, format='audio/wav')
         col4, col5 = st.columns(2)
         # Display the images in the columns
         with col4:
-            st.button('Predict_from_spectograms', on_click=predict_from_spectograms)
+            if st.button('Predict from Audio Image'):
+                predict_from_spectograms()
         with col5:
-            st.button('Predict_from_features', on_click=predict_from_features)
+            if st.button('Predict from Audio Features'):
+                predict_from_features()
 
 def page_5():
+    title_5 = "TEAM"
     st.markdown("# TEAM")
     # st.sidebar.markdown("# Page 5")
 
@@ -148,13 +159,3 @@ page_names_to_funcs = {
 
 selected_page = st.sidebar.selectbox("Select a page", page_names_to_funcs.keys())
 page_names_to_funcs[selected_page]()
-
-
-FONT_SIZE_CSS = f"""
-<style>
-h1 {{
-    font-size: 36px !important;
-}}
-</style>
-"""
-st.write(FONT_SIZE_CSS, unsafe_allow_html=True)
