@@ -16,6 +16,19 @@ text_style = """
     font-family: 'Roboto'
 """
 
+text_style_2 = """
+    font-size: 12px;
+    color: gray;
+    text-align: centered;
+    font-family: 'Roboto'
+"""
+text_style_3 = """
+    font-size: 15px;
+    color: black;
+    text-align: centered;
+    font-family: 'Roboto'
+"""
+
 title_style = """
     font-size: 30px;
     color: black;
@@ -59,11 +72,11 @@ pre-processing and augmentation, these served as the training sets of the model.
 
     # Display the images in the columns
     with col1:
-        st.image('image_1.jpg')
+        st.image('image_01.jpg')
     with col2:
-        st.image('image_2.jpg')
+        st.image('image_02.jpg')
     with col3:
-        st.image('image_3.jpg')
+        st.image('image_03.jpg')
         # st.image("image_1.jpg", use_column_width=True, width=50)
 
     st.write(f"<p style='{text_style}'>{text_2}</p>", unsafe_allow_html=True)
@@ -151,29 +164,38 @@ def page_4():
 
 def page_5():
     title_5 = "TEAM"
-    text_daniel = "Daniel Querido"
-    text_laszlo = "Laszlo Zssiros"
-    text_mariana = "Mariana Sanin"
+    text_daniel = "Daniel Matos Querido"
+    text_laszlo = "Laszlo Robert Zsiros"
+    text_mariana = "Mariana Sanin Riaño"
+
     st.markdown(f"<p style='{title_style}'>{title_5}</p>", unsafe_allow_html=True)
 
-    col6, col7, col8 = st.columns(3)
+    col6, col7, col8 = st.columns(3, gap='small')
     # Display the images in the columns
     with col6:
         st.image('me.png')
-        st.write(f"<p style='{text_style}'>{text_daniel}</p>", text_align='center', unsafe_allow_html=True)
+        st.write(f"<p style='{text_style_3}'>{text_daniel}</p>", text_align='center', unsafe_allow_html=True)
+        st.write(f"<p style='{text_style_2}'>daniel.mquerido@gmail.com</p>", text_align='center', unsafe_allow_html=True)
+        st.write(f"<p style='{text_style_2}'>https://www.linkedin.com/in/daniel-querido/</p>", text_align='center', unsafe_allow_html=True)
+        st.write(f"<p style='{text_style_2}'>https://www.instagram.com/danielmquerido/</p>", text_align='center', unsafe_allow_html=True)
+
     with col7:
         st.image('laszlo.png')
-        st.write(f"<p style='{text_style}'>{text_laszlo}</p>", text_align='center', unsafe_allow_html=True)
+        st.write(f"<p style='{text_style_3}'>{text_laszlo}</p>", text_align='center', unsafe_allow_html=True)
+        st.write(f"<p style='{text_style_2}'>robilaci@gmail.com</p>", text_align='center', unsafe_allow_html=True)
+        st.write(f"<p style='{text_style_2}'>https://www.linkedin.com/in/laszlo-robert-zsiros-5a440250/</p>", text_align='center', unsafe_allow_html=True)
+        st.write(f"<p style='{text_style_2}'>https://www.instagram.com/rblc81/</p>", text_align='center', unsafe_allow_html=True)
+
     with col8:
         st.image('mariana.png')
-        st.write(f"<p style='{text_style}'>{text_mariana}</p>", text_align='center', unsafe_allow_html=True)
+        st.write(f"<p style='{text_style_3}'>{text_mariana}</p>", unsafe_allow_html=True)
+        st.write(f"<p style='{text_style_2}'>mariana.sanin99@gmail.com</p>", text_align='center', unsafe_allow_html=True)
+        st.write(f"<p style='{text_style_2}'>https://www.linkedin.com/in/marianasanin/</p>", text_align='center', unsafe_allow_html=True)
+        st.write(f"<p style='{text_style_2}'>https://www.instagram.com/marianasanin/</p>", text_align='center', unsafe_allow_html=True)
 
     col6.text_align = 'center'
     col7.text_align = 'center'
     col8.text_align = 'center'
-
-
-
 
 
 page_names_to_funcs = {
