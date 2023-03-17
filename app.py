@@ -4,6 +4,12 @@ import requests
 import pandas as pd
 import matplotlib.pyplot as plt
 
+st.sidebar.image(
+    "laica_logo_v1.png",
+    width=250,
+)
+
+
 text_style = """
     font-size: 18px;
     color: gray;
@@ -146,7 +152,7 @@ def page_4():
 
 def page_5():
     title_5 = "TEAM"
-    st.markdown("# TEAM")
+    st.markdown(f"<p style='{title_style}'>{title_5}</p>", unsafe_allow_html=True)
     # st.sidebar.markdown("# Page 5")
 
 page_names_to_funcs = {
