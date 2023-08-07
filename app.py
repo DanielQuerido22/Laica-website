@@ -74,7 +74,7 @@ pre-processing and augmentation, these served as the training sets of the model.
     with col1:
         st.image('resources/image_01.jpg')
     with col2:
-        st.image('vimage_02.jpg')
+        st.image('resources/image_02.jpg')
     with col3:
         st.image('resources/image_03.jpg')
         # st.image("image_1.jpg", use_column_width=True, width=50)
